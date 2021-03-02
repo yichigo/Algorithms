@@ -92,3 +92,23 @@ class Solution:
         left.next = left.next.next
         
         return preHead.next
+
+
+    def middleNode(self, head: ListNode) -> ListNode:
+        if not head:
+            return None
+        
+        left = head
+        right = head
+        rightNext = right.next
+        while rightNext and rightNext.next:
+            left = left.next
+            right = rightNext.next
+            rightNext = right.next
+        
+        if rightNext: # return the second middle node
+            return left.next
+        else: # return the middle node
+            return left
+
+    
