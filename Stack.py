@@ -1,8 +1,10 @@
+import sys
+
 class Solution:
-    def calculate(self, s: str) -> int:
+    def calculate(self, s: str) -> float:
         
         # define basic calculation
-        def result(operator: str, value2:int, value1:int): # value2 first, because of pop()
+        def result(operator: str, value2:float, value1:float): # value2 first, because of pop()
             if operator == '*':
                 return value1 * value2
             elif operator == '/':
@@ -11,9 +13,11 @@ class Solution:
                 return value1 + value2
             elif operator == '-':
                 return value1 - value2
+            elif operator == '^':
+                return value1**value2
         
         # define priority = (number of quotes, priorityMap[operator]) 
-        priorityMap = {'+':0, '-':0, '*':1, '/':1}
+        priorityMap = {'+':0, '-':0, '*':1, '/':1, '^':2}
         
         # init
         values = [] # stack of numbers
@@ -22,16 +26,16 @@ class Solution:
         value = ''
         countQuotes = 0
         for char in s:
-            if char.isdigit():
+            if char.isdigit() or (char == '.'):
                 value = value + char
                 
-            elif char in ['+','-','*','/']: # operators
+            elif char in ['+','-','*','/','^']: # operators
                 # check minus sign
                 if (char == '-') and (value == ''):
                     value = '0' # add 0 in front of -
                 
                 # append the last value to stack
-                values.append(int(value))
+                values.append(float(value))
                 value = ''
                 
                 # check operators' priority
@@ -51,14 +55,28 @@ class Solution:
                 countQuotes -= 1
             else: # pass for others like space sign ' '
                 continue
-            
         
         # push the last number on hand to stack
         if len(value):
-            values.append(int(value))
-            
+            values.append(float(value))
+        
         # clear stackes
         while len(operators):
             values.append(result(operators.pop()[1], values.pop(), values.pop()))
         
         return values[0]
+
+def main():
+    calculator = Solution()
+    for expression in sys.stdin:
+        try:
+            if expression == 'exit\n':
+                return 0
+            
+            result = calculator.calculate(expression)
+            print(result)
+        except:
+            print("Wrong Expression.")
+
+if __name__ == "__main__":
+    main()
