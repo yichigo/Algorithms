@@ -1,5 +1,3 @@
-import sys
-
 class Solution:
     def calculate(self, s: str) -> float:
         
@@ -65,18 +63,3 @@ class Solution:
             values.append(result(operators.pop()[1], values.pop(), values.pop()))
         
         return values[0]
-
-def main():
-    calculator = Solution()
-    for expression in sys.stdin:
-        try:
-            if expression == 'exit\n':
-                return 0
-            
-            result = calculator.calculate(expression)
-            print(result)
-        except:
-            print("Wrong Expression.")
-
-if __name__ == "__main__":
-    main()
