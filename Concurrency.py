@@ -46,13 +46,11 @@ class TrafficLight:
         if direction:
             roadId = self.direction2road[direction]
         
-        if roadId == self.openRoad: # cross
-            with self.lock:
-                crossCar()
-        else: # wait
+        if roadId != self.openRoad: 
             with self.lock:
                 self.openRoad = roadId
                 turnGreen()
-                crossCar()
+        
+        crossCar()
 
                 
