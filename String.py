@@ -21,3 +21,15 @@ class Solution:
                 chars[i_write] = digit
         
         return i_write + 1
+
+    def isStrobogrammatic(self, num: str) -> bool:
+        flip = {'0':'0','1':'1','6':'9', '8':'8', '9':'6'}
+        
+        n = len(num)
+        for i in range(ceil(n/2)):
+            if (num[i] in flip) and (flip[num[i]] == num[n-1-i]):
+                continue
+            else:
+                return False
+        
+        return True
