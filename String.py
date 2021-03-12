@@ -40,3 +40,24 @@ class Solution:
         if s == s[::-1]:
             return 1
         return 2
+
+
+    def hasAllCodes(self, s: str, k: int) -> bool:
+        left = 0
+        right = left + k
+        n = len(s)
+        stringSet = set()
+        count = 0
+        while right <= n:
+            subString = s[left:right]
+            if subString not in stringSet:
+                stringSet.add(subString)
+                count += 1
+            
+            left += 1
+            right += 1
+        
+        if count == 2**k:
+            return True
+        else:
+            return False
